@@ -35,8 +35,19 @@ mongoose
   })
   .catch((err) => console.log(`${err} did not connect`));
 
-app.use(express.static(path.join(__dirname, 'client/build')));
 
+
+// Serve static files from React
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+// Fallback for React routing
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
+
+// Example API route
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from backend!' });
+});
+
+module.exports = app;
