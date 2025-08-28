@@ -3,6 +3,9 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
+const path = require('path');
+
+
 
 const authRoutes = require("./routes/auth.js")
 const listingRoutes = require("./routes/listing.js")
@@ -31,3 +34,9 @@ mongoose
     app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
   })
   .catch((err) => console.log(`${err} did not connect`));
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
